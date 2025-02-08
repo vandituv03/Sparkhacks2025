@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom';
 
 const ChatBot = () => {
     const navigate = useNavigate();
@@ -8,27 +7,41 @@ const ChatBot = () => {
     const [input, setInput] = useState('');
     const [image, setImage] = useState(null);
 
-    const handleInputChange = (e) => {
-        setInput(e.target.value);
-    };
+    // Effect to simulate fetching previous messages (replace with API call if needed)
+    useEffect(() => {
+        const savedMessages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+        setMessages(savedMessages);
+    }, []);
+
+    // Effect to store messages locally when they change (for persistence)
+    useEffect(() => {
+        localStorage.setItem('chatMessages', JSON.stringify(messages));
+    }, [messages]);
+
+    const handleInputChange = (e) => setInput(e.target.value);
 
     const handleFileChange = (e) => {
-        setImage(e.target.files[0]);
+        if (e.target.files.length > 0) {
+            setImage(URL.createObjectURL(e.target.files[0])); // Preview uploaded image
+        }
     };
 
     const handleLogout = () => {
         if (window.confirm("Are you sure you want to logout?")) {
-          navigate("/login");
+            localStorage.removeItem('chatMessages'); // Clear chat history on logout
+            navigate("/login");
         }
-      };
+    };
 
     const sendMessage = () => {
+        if (!input.trim() && !image) return; // Prevent empty messages
+
         const newMessage = { text: input, img: image };
-        setMessages([...messages, newMessage]);
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        
+        // Reset input fields
         setInput('');
         setImage(null);
-        // Placeholder for sending message to your server
-        // sendToServer(newMessage);
     };
 
     useEffect(() => {
