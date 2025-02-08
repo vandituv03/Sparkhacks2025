@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TreePine, LogOut } from "lucide-react";
+import { LogOut } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "./Card";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "./table";
-import { ArrowUp, ArrowDown, Cloud, Flower2 } from "lucide-react";
+import { ArrowUp, ArrowDown, Cloud } from "lucide-react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [weatherData, setWeatherData] = useState(null);
+  const [cropAdvisory, setCropAdvisory] = useState(null);
+  const [currentTipIndex, setCurrentTipIndex] = useState(0);
+
 
   useEffect(() => {
     fetch("https://api.openweathermap.org/data/2.5/weather?q=your_city&appid=your_api_key&units=metric") 
@@ -23,28 +26,62 @@ const Dashboard = () => {
       .catch((error) => console.error("Error fetching weather data:", error));
   }, []);
 
+  useEffect(() => {
+    fetch("https://api.example.com/crop-advisory") 
+      .then((response) => response.json())
+      .then((data) => {
+        setCropAdvisory(data.advisories || []);
+      })
+      .catch((error) => console.error("Error fetching crop advisory:", error));
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTipIndex((prevIndex) => (prevIndex + 1) % tips.length);
+    }, 50000);
+    return () => clearInterval(interval);
+  }, []);
+
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
       navigate("/login");
     }
   };
   const handleChatClick = () => {
-    navigate("/chat")
+    navigate("/Chat");
+  };
+  const handleForumClick = () => {
+    navigate("/Forum");
+  };
+  const handleAboutClick = () => {
+    navigate("/AboutUS");
+  };
+  const styles = {
+    homeIcon: {
+      cursor: 'pointer',
+      width: '50px', 
+      height: '40px'
+  },
   }
+  const tips = [
+    "Rotate crops annually to maintain soil health.",
+    "Water crops early in the morning to reduce evaporation.",
+    "Use organic fertilizers for better soil fertility.",
+    "Monitor weather conditions to plan farming activities effectively."
+  ];
+  
+
 
   return (
-    <div className="min-h-screen bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2832&auto=format&fit=crop')", height: "100vh", width: "100vw" }}>
-      
-      {/* Horizontal Ribbon - Top Navigation Bar */}
+    <div className="min-h-screen bg-cover bg-center bg-fixed fixed" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2832&auto=format&fit=crop')", height: "100vh", width: "100vw" }}>
       <div className="w-full bg-white shadow-md py-4 px-6 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
         <div className="flex items-center space-x-6">
-          <TreePine className="text-green-600 h-8 w-8" />
-          <span className="text-2xl font-bold text-green-800">AgriMitra</span>
+          {/* <span className="text-2xl font-bold text-green-800">AgriMitra</span> */}
+          <img src="/public/finalLogo.png" style={styles.homeIcon} alt="Home" onClick={() => window.location.href = '/dashboard'} />
           <nav className="hidden md:flex space-x-6">
             <button className="text-green-700 hover:text-green-900 font-medium" onClick={handleChatClick}>Chatbot</button>
-            <button className="text-green-700 hover:text-green-900 font-medium">Crop Guide</button>
-            <button className="text-green-700 hover:text-green-900 font-medium">Market Prices</button>
-            <button className="text-green-700 hover:text-green-900 font-medium">Weather</button>
+            <button className="text-green-700 hover:text-green-900 font-medium" onClick={handleForumClick}>Forum</button>
+            <button className="text-green-700 hover:text-green-900 font-medium" onClick={handleAboutClick}>About Us</button>
           </nav>
         </div>
         <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-md flex items-center hover:bg-red-600 transition">
@@ -52,11 +89,9 @@ const Dashboard = () => {
         </button>
       </div>
 
-      {/* Content Area - Adding padding-top to prevent overlap */}
-      <div className="container mx-auto px-4 py-20">
+      <div className="container mx-auto px-4 py-20 fixed">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
 
-          {/* Weather Forecast Card */}
           <Card className="bg-white shadow-md">
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-green-800">Weather Forecast</CardTitle>
@@ -76,26 +111,23 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Crop Advisory Card */}
           <Card className="bg-white shadow-md">
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-green-800">Crop Advisory</CardTitle>
-              <Flower2 className="h-6 w-6 text-green-500" />
             </CardHeader>
             <CardContent className="text-gray-700">
-              <p className="font-medium">Current Season: Rabi</p>
-              <p className="mt-2">Recommended Crops:</p>
-              <ul className="list-disc list-inside mt-1">
-                <li>Wheat</li>
-                <li>Mustard</li>
-                <li>Potato</li>
-              </ul>
+              {cropAdvisory ? (
+                <ul className="list-disc list-inside mt-1">
+                  {cropAdvisory.map((advice, index) => (
+                    <li key={index}>{advice}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>Loading crop advisory data...</p>
+              )}
             </CardContent>
           </Card>
-
-        </div>
-
-        {/* Market Prices Table */}
+          {/* Market Prices Table */}
         <Card className="bg-white shadow-md">
           <CardHeader>
             <CardTitle className="text-green-800">Market Prices</CardTitle>
@@ -139,6 +171,16 @@ const Dashboard = () => {
             </Table>
           </CardContent>
         </Card>
+        <Card className="bg-white shadow-md">
+            <CardHeader>
+              <CardTitle className="text-green-800">Farming Tips</CardTitle>
+            </CardHeader>
+            <CardContent className="text-gray-700">
+              <p>{tips[currentTipIndex]}</p>
+            </CardContent>
+        </Card>
+
+        </div>
       </div>
     </div>
   );
