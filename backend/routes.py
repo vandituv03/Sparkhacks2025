@@ -27,6 +27,18 @@ def login():
 
     return jsonify({"message": "Invalid credentials"}), 401
 
+@api_routes.route("/register", methods=["POST"])
+def register():
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+    models.insert_user(data.get("fname"), data.get("lname"), data.get("phone"), data.get("email"), data.get("password"), data.get("address1"), data.get("city"), data.get("state"), data.get("zip"))
+    return jsonify({
+                "message": "Registeration successful",
+                "redirect": "/dashboard"  # Redirect to dashboard after login
+            }), 200
+
+
 @api_routes.route("/dashboard", methods=["GET"])
 def dashboard():
     return jsonify({"data": dashboard_data})

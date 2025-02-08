@@ -12,7 +12,7 @@ users_collection = db["Users"]
 # Send a ping to confirm a successful connection
 try:
     client.admin.command('ping')
-    
+    print("Connected to the database")
 
 except Exception as e:
     print(e)
@@ -26,7 +26,20 @@ def findUser(email):
         if user["email"] == email:
             return user
 
-
+def insert_user(fname, lname, number, email, password, address1, city, state, zip):
+    user_data = {
+        "fname": fname,
+        "lname": lname,
+        "phone": number,
+        "email": email,  # Primary Key
+        "password": password,
+        "address1": address1,
+        "city": city,
+        "state": state,
+        "zip": zip
+    }
+    users_collection.insert_one(user_data)
+    print("User inserted successfully!")
 
 
       

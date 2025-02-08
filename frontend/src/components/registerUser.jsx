@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fname: "",
+    lname: "",
     phone: "",
     email: "",
     password: "",
-    address: "",
+    address1: "",
     city: "",
     state: "",
-    zipcode: ""
+    zip: ""
   });
 
   const [error, setError] = useState("");
@@ -58,11 +58,11 @@ const RegisterPage = () => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label>First Name</label>
-              <input name="firstName" value={formData.firstName} onChange={handleChange} required className="w-full px-3 py-2 border rounded" />
+              <input name="fname" value={formData.fname} onChange={handleChange} required className="w-full px-3 py-2 border rounded" />
             </div>
             <div>
               <label>Last Name</label>
-              <input name="lastName" value={formData.lastName} onChange={handleChange} required className="w-full px-3 py-2 border rounded" />
+              <input name="lname" value={formData.lname} onChange={handleChange} required className="w-full px-3 py-2 border rounded" />
             </div>
           </div>
           <div>
@@ -79,7 +79,7 @@ const RegisterPage = () => {
           </div>
           <div>
             <label>Address</label>
-            <input name="address" value={formData.address} onChange={handleChange} required className="w-full px-3 py-2 border rounded" />
+            <input name="address1" value={formData.address1} onChange={handleChange} required className="w-full px-3 py-2 border rounded" />
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -92,8 +92,8 @@ const RegisterPage = () => {
             </div>
           </div>
           <div>
-            <label>Zipcode</label>
-            <input name="zipcode" value={formData.zipcode} onChange={handleChange} required className="w-full px-3 py-2 border rounded" />
+            <label>Zip Code</label>
+            <input name="zip" value={formData.zip} onChange={handleChange} required className="w-full px-3 py-2 border rounded" />
           </div>
           <button type="submit" className="w-full bg-green-600 text-white rounded-lg py-2 hover:bg-green-700 transition duration-200">Register</button>
           <p className="text-sm text-gray-600 text-center mt-3">
