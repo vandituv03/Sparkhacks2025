@@ -58,14 +58,12 @@ const Dashboard = () => {
     navigate("/Forum");
   };
 
-  const handleAboutClick = () => {
-    navigate("/AboutUS");
-  };
+  
 
   const styles = {
     homeIcon: {
       cursor: 'pointer',
-      width: '50px',
+      width: '70px',
       height: '40px'
     },
   };
@@ -85,7 +83,6 @@ const Dashboard = () => {
           <nav className="hidden md:flex space-x-6">
             <button className="text-green-700 hover:text-green-900 font-medium" onClick={handleChatClick}>Chatbot</button>
             <button className="text-green-700 hover:text-green-900 font-medium" onClick={handleForumClick}>Forum</button>
-            <button className="text-green-700 hover:text-green-900 font-medium" onClick={handleAboutClick}>About Us</button>
           </nav>
         </div>
         <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded-md flex items-center hover:bg-red-600 transition">
@@ -93,7 +90,7 @@ const Dashboard = () => {
         </button>
       </div>
 
-      <div className="container mx-auto px-4 py-20 fixed">
+      <div className="container mx-auto px-12 py-20 fixed">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <Card className="bg-white shadow-md">
             <CardHeader className="flex flex-row items-center justify-between">

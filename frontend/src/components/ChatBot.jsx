@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 
 
@@ -31,6 +31,16 @@ const ChatBot = () => {
         // sendToServer(newMessage);
     };
 
+    useEffect(() => {
+        // Disable scrolling when the component mounts
+        document.body.style.overflow = 'hidden';
+
+        // Re-enable scrolling when the component unmounts
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
+
     const styles = {
         chatbotContainer: {
             display: 'flex',
@@ -57,8 +67,11 @@ const ChatBot = () => {
             color: 'white',
             fontSize: '1.2rem',
             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.15)',
-            position: 'absolute',
-            top: 0
+            position: 'fixed',
+            top: 0,
+            right: 0,
+            
+
         },
         homeIcon: {
             cursor: 'pointer',
@@ -76,7 +89,7 @@ const ChatBot = () => {
         chatDisplay: {
             width: '75%',
             flex: 1,
-            overflowY: 'auto',
+            overflowY: 'hidden',
             backgroundColor: 'rgba(255, 255, 255, 0.85)',
             borderRadius: '10px',
             padding: '20px',
@@ -88,7 +101,7 @@ const ChatBot = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            padding: '10px',
+            padding: '5px',
             backgroundColor: 'rgba(255, 255, 255, 0.85)',
             borderRadius: '10px',
             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
