@@ -5,11 +5,12 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    watch: {
-      // Use polling instead of native file system events
-      usePolling: true,
-      // Check for changes every 500 ms
-      interval: 500
+    proxy: {
+      "/api":{
+        target: "http://127.0.0.1.5000",
+        changeOrigin: true,
+        secure: false
+      }
     }
   }
 })
