@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
-
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ChatBot = () => {
     const navigate = useNavigate();
@@ -8,28 +7,52 @@ const ChatBot = () => {
     const [input, setInput] = useState('');
     const [image, setImage] = useState(null);
 
-    const handleInputChange = (e) => {
-        setInput(e.target.value);
-    };
+    // Effect to simulate fetching previous messages (replace with API call if needed)
+    useEffect(() => {
+        const savedMessages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+        setMessages(savedMessages);
+    }, []);
+
+    // Effect to store messages locally when they change (for persistence)
+    useEffect(() => {
+        localStorage.setItem('chatMessages', JSON.stringify(messages));
+    }, [messages]);
+
+    const handleInputChange = (e) => setInput(e.target.value);
 
     const handleFileChange = (e) => {
-        setImage(e.target.files[0]);
+        if (e.target.files.length > 0) {
+            setImage(URL.createObjectURL(e.target.files[0])); // Preview uploaded image
+        }
     };
 
     const handleLogout = () => {
         if (window.confirm("Are you sure you want to logout?")) {
-          navigate("/login");
+            localStorage.removeItem('chatMessages'); // Clear chat history on logout
+            navigate("/login");
         }
-      };
+    };
 
     const sendMessage = () => {
+        if (!input.trim() && !image) return; // Prevent empty messages
+
         const newMessage = { text: input, img: image };
-        setMessages([...messages, newMessage]);
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+        
+        // Reset input fields
         setInput('');
         setImage(null);
-        // Placeholder for sending message to your server
-        // sendToServer(newMessage);
     };
+
+    useEffect(() => {
+        // Disable scrolling when the component mounts
+        document.body.style.overflow = 'hidden';
+
+        // Re-enable scrolling when the component unmounts
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, []);
 
     const styles = {
         chatbotContainer: {
@@ -57,8 +80,11 @@ const ChatBot = () => {
             color: 'white',
             fontSize: '1.2rem',
             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.15)',
-            position: 'absolute',
-            top: 0
+            position: 'fixed',
+            top: 0,
+            right: 0,
+            
+
         },
         homeIcon: {
             cursor: 'pointer',
@@ -76,7 +102,7 @@ const ChatBot = () => {
         chatDisplay: {
             width: '75%',
             flex: 1,
-            overflowY: 'auto',
+            overflowY: 'hidden',
             backgroundColor: 'rgba(255, 255, 255, 0.85)',
             borderRadius: '10px',
             padding: '20px',
@@ -88,7 +114,7 @@ const ChatBot = () => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            padding: '10px',
+            padding: '5px',
             backgroundColor: 'rgba(255, 255, 255, 0.85)',
             borderRadius: '10px',
             boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)'
