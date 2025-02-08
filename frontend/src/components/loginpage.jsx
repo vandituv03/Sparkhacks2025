@@ -42,6 +42,10 @@ import { useNavigate } from "react-router-dom";
       }
     };
 
+    const handleRegisterClick = () => {
+      navigate("/register"); // Navigate to the registration page
+    };
+
   return (
     <div className="flex items-center justify-center min-h-screen min-w-screen overflow-hidden" style={{
       backgroundImage: `url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2832&auto=format&fit=crop')`,
@@ -57,6 +61,7 @@ import { useNavigate } from "react-router-dom";
           <h1 className="text-3xl font-bold text-green-800">AgriMitra</h1>
           <p className="text-gray-600">Your Farming Companion</p>
         </div>
+        {error && <div className="text-red-500 text-center mb-4">{error}</div>}
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-1" htmlFor="email">Email Address</label>
@@ -68,7 +73,7 @@ import { useNavigate } from "react-router-dom";
           </div>
           <button type="submit" className="w-full bg-green-600 text-white rounded-lg py-2 hover:bg-green-700 transition duration-200">Login</button>
           <div className="text-center mt-3">
-            <p className="text-sm text-gray-600">Don't have an account? <a href="#" className="text-green-600 hover:text-green-800 font-semibold"> Register here</a></p>
+            <p className="text-sm text-gray-600">Don't have an account? <a href="#" className="text-green-600 hover:text-green-800 font-semibold" onClick={handleRegisterClick}> Register here</a></p>
           </div>
         </form>
       </div>
