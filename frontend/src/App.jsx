@@ -5,14 +5,6 @@ import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/")
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
-
   return (
     <>
       <div>
@@ -21,7 +13,7 @@ function App() {
         </a>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>v
+        </a>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
