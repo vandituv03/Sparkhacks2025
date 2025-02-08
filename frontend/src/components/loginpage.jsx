@@ -43,11 +43,13 @@ import { useNavigate } from "react-router-dom";
     };
 
   return (
-    <div className="flex items-center justify-center min-h-screen overflow-hidden" style={{
+    <div className="flex items-center justify-center min-h-screen min-w-screen overflow-hidden" style={{
       backgroundImage: `url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2832&auto=format&fit=crop')`,
       backgroundSize: "cover",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
+      height: "100vh",
+      width: "100vw",
       margin: 0
     }}>
       <div className="w-full max-w-md p-6 glass-effect rounded-lg shadow-2xl bg-white bg-opacity-90 backdrop-blur-md">
