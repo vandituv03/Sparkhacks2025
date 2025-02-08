@@ -14,7 +14,7 @@ WEATHERBIT_API_KEY = os.getenv("WEATHERBIT_API_KEY")
 OPENWEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
 WEATHERBIT_BASE_URL = "https://api.weatherbit.io/v2.0/alerts"
 
-# Predefined farm waste reduction tips
+# Predefined farm waste reduction tips updated
 FARM_WASTE_TIPS = [
     "Use crop residues for composting instead of burning them.",
     "Sell excess produce in local markets instead of discarding it.",
