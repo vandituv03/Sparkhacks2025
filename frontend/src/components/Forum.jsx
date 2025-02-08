@@ -18,11 +18,7 @@ const ForumPage = () => {
   const fetchPosts = async () => {
     try {
       const response = await axios.get("http://127.0.0.1:5000/api/forum");
-<<<<<<< HEAD
-      console.log("Fetched Posts:", response.data); // Debugging print
-=======
       console.log("Fetched Posts:", response.data);
->>>>>>> fe23cf121c8d4997ccda21adced8e38dbbd76384
       setPosts(response.data);
     } catch (error) {
       console.error("Error fetching forum posts:", error);
@@ -30,29 +26,12 @@ const ForumPage = () => {
   };
 
   const handleCreatePost = async () => {
-<<<<<<< HEAD
-    if (!title || !description) {
-      setError("Title and Description are required!");
-=======
     if (!email || !title || !description) {
       setError("Email, Title, and Description are required!");
->>>>>>> fe23cf121c8d4997ccda21adced8e38dbbd76384
       return;
     }
 
     try {
-<<<<<<< HEAD
-      
-      const userResponse = await axios.get("http://127.0.0.1:5000/api/forum"); 
-      const userData = userResponse.data;
-
-      const response = await axios.post("http://127.0.0.1:5000/api/forum", {
-        title,
-        desc: description,
-        fname: userData.fname,
-        lname: userData.lname,
-        email: userData.email,
-=======
       const postData = {
         email,
         title,
@@ -63,26 +42,18 @@ const ForumPage = () => {
 
       const response = await axios.post("http://127.0.0.1:5000/forum", postData, {
         headers: { "Content-Type": "application/json" },
->>>>>>> fe23cf121c8d4997ccda21adced8e38dbbd76384
       });
 
       if (response.status === 201) {
         alert("Post created successfully!");
         setTitle("");
         setDescription("");
-<<<<<<< HEAD
-=======
         setEmail(""); // Reset email after post creation
->>>>>>> fe23cf121c8d4997ccda21adced8e38dbbd76384
         setShowModal(false);
         fetchPosts(); // Refresh forum posts
       }
     } catch (error) {
-<<<<<<< HEAD
-      console.error("Error creating post:", error);
-=======
       console.error("Error creating post:", error.response?.data || error.message);
->>>>>>> fe23cf121c8d4997ccda21adced8e38dbbd76384
       setError("Failed to create post");
     }
   };
@@ -107,22 +78,14 @@ const ForumPage = () => {
       </div>
 
       {/* Create Post Button */}
-<<<<<<< HEAD
-      <div className="p-6">
-=======
       {/* <div className="p-6">
->>>>>>> fe23cf121c8d4997ccda21adced8e38dbbd76384
         <button 
           onClick={() => setShowModal(true)} 
           className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
         >
           + Create Post
         </button>
-<<<<<<< HEAD
-      </div>
-=======
       </div> */}
->>>>>>> fe23cf121c8d4997ccda21adced8e38dbbd76384
 
       {/* Forum Table */}
       <div className="flex-grow p-6 overflow-auto">
@@ -138,13 +101,8 @@ const ForumPage = () => {
             {posts.map((post) => (
               <tr key={post._id} className="bg-white border-b">
                 <th scope="row" className="px-6 py-4 font-medium text-gray-900">{post.title}</th>
-<<<<<<< HEAD
-                <td className="px-6 py-4">{post.desc}</td> 
-                <td className="px-6 py-4">{post.fname} {post.lname}</td> 
-=======
                 <td className="px-6 py-4">{post.desc}</td>
                 <td className="px-6 py-4">{post.fname} {post.lname}</td>
->>>>>>> fe23cf121c8d4997ccda21adced8e38dbbd76384
               </tr>
             ))}
           </tbody>
@@ -161,11 +119,7 @@ const ForumPage = () => {
               type="email"
               placeholder="Email"
               value={email}
-<<<<<<< HEAD
-              onChange={(e) => setTitle(e.target.value)}
-=======
               onChange={(e) => setEmail(e.target.value)}
->>>>>>> fe23cf121c8d4997ccda21adced8e38dbbd76384
               className="w-full p-2 border border-gray-300 rounded mb-3"
               required
             />
