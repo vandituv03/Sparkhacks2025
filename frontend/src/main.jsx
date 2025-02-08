@@ -5,16 +5,20 @@ import App from "./App";
 import LoginPage from "./components/loginpage";
 import RegisterPage from "./components/registerUser"
 import Dashboard from "./components/Dashboard"
+import ForumPage from "./components/Forum"
+import ChatBot from "./components/ChatBot"
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/Forum" element={<ForumPage />} />
+        <Route path="/Chat" element={<ChatBot />} />
       </Routes>
     </Router>
   </React.StrictMode>

@@ -1,12 +1,11 @@
 from flask import Blueprint, jsonify, request
 import models
 
-# Dummy users data (replace with database authentication in real-world applications)
 api_routes = Blueprint("api_routes", __name__)
 
 @api_routes.route("/login", methods=["POST"])
 def login():
-    data = request.get_json()  # Get JSON data from frontend
+    data = request.get_json() 
     username = data.get("username")
     password = data.get("password")
     print(username, password)
@@ -20,10 +19,9 @@ def login():
         if(user["password"] == password):
             print("logging")
             return jsonify({
-                "message": "Login successful"
+                "message": "Login successful",
+                "redirect": "/dashboard"
             }), 200
-
-    # Check credentials
 
     return jsonify({"message": "Invalid credentials"}), 401
 
@@ -35,10 +33,14 @@ def register():
     models.insert_user(data.get("fname"), data.get("lname"), data.get("phone"), data.get("email"), data.get("password"), data.get("address1"), data.get("city"), data.get("state"), data.get("zip"))
     return jsonify({
                 "message": "Registeration successful",
-                "redirect": "/dashboard"  # Redirect to dashboard after login
+                "redirect": "/dashboard"  
             }), 200
 
 
 @api_routes.route("/dashboard", methods=["GET"])
 def dashboard():
     return jsonify({"data": dashboard_data})
+
+@api_routes.route("/chat")
+def chat():
+    return jsonify({"data": chat_data})
