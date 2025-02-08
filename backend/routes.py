@@ -1,7 +1,10 @@
 from flask import Blueprint, jsonify, request
 import models
+from flask_cors import CORS  # Allow frontend to access the backend
+from dashboard import get_weather_data, get_weather_alerts  # Ensure correct imports
 
 api_routes = Blueprint("api_routes", __name__)
+curr_user = {}
 
 @api_routes.route("/login", methods=["POST"])
 def login():
@@ -18,6 +21,7 @@ def login():
         print("XYZ")     
         if(user["password"] == password):
             print("logging")
+            curr_user = user
             return jsonify({
                 "message": "Login successful",
                 "redirect": "/dashboard"
@@ -39,7 +43,32 @@ def register():
 
 @api_routes.route("/dashboard", methods=["GET"])
 def dashboard():
-    return jsonify({"data": dashboard_data})
+    """Fetches weather, alerts, and a random farm waste tip"""
+
+    # Fetch the city from curr_user
+    city = curr_user.get("city", "Chicago")  # Default to "New York" if missing
+    country = curr_user.get("country", "US")  # Default country as "US"
+    print(city, country)
+
+    print(f"[INFO] Fetching dashboard data for city: {city}, country: {country}")  # Debugging print
+
+    weather_data = get_weather_data(city, country)
+    weather_alerts = get_weather_alerts(city, country)
+    # farm_tip = get_farm_tip()  # Returns one random tip
+
+    return jsonify({
+        "city": city,
+        "alerts": weather_alerts,
+        "temperature": weather_data["temperature"],  
+        "humidity": weather_data["humidity"],        
+        "wind_speed": weather_data["wind_speed"]     
+        # "farm_tip": farm_tip  # Directly returning a string tip
+    })
+
+# Enable CORS to allow frontend requests
+CORS(api_routes)
+
+
 
 @api_routes.route("/chat")
 def chat():
