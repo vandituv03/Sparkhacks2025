@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import Button from "./Button.jsx";
 import { Card } from "./Card.jsx";
+import { LogIn } from "lucide-react";
 // import { Flower2 } from 'lucide-react';
 
 export default function About() {
@@ -8,22 +9,22 @@ export default function About() {
 
   return (
     <div className="w-full min-h-screen min-w-screen bg-[#f0f9f0]" style={{ fontFamily: 'Poppins, sans-serif', height: "100vh", width: "100vw"}}>
-      <nav className="bg-green-600 text-red py-4 px-6 shadow-lg">
-        <div className="container mx flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            {/* <Flower1 className="h-6 w-6" /> */}
-            <span className="text-xl font-bold">AgriMitra</span>
-          </div>
-          <Button
-            variant="ghost"
-            className="hover:text-red-200px flex items-center space-x-1"
-            onClick={() => navigate("/login")}
-          >
-            
-            <span>Login</span>
-          </Button>
+      <nav className="bg-white py-4 px-6 shadow-lg">
+        <div className="container mx-auto flex justify-center">
+            {/* logo centered*/ }
+            <div className="flex-1 flex justify-center">
+              <a href="/" className="flex items-center">
+                <img src="/finalLogo.png" alt="Logo" className="h-16 w-auto md:h-20"/>
+            </a>
         </div>
-      </nav>
+          <button onClick={() => navigate("/login")} className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center hover:bg-red-600 transition right: 30px ">
+          <LogIn className="mr-2 h-4 w-4" /> login
+        </button>
+        </div>
+        </nav>
+      
+    
+      
 
       <div className="bg-gradient-to-b from-green-600 to-green-500 text-white py-20">
         <div className="container mx-auto px-6 text-center">
@@ -130,9 +131,9 @@ export default function About() {
 
       <footer className="bg-green-800 text-white py-8">
         <div className="container mx-auto px-6 text-center">
-          <p>&copy; 2023 AgriMitra. All rights reserved.</p>
+          <p>&copy; 2025 AgriMitra. All rights reserved.</p>
         </div>
       </footer>
-    </div>
+    </div>  
   );
 }
