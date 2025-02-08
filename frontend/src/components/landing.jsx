@@ -77,21 +77,6 @@ export default function About() {
           </div>
         </div>
 
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-green-800 mb-6">Our Impact</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            {[
-              { number: "10,000+", label: "Active Farmers" },
-              { number: "30%", label: "Average Yield Increase" },
-              { number: "24/7", label: "Support Available" }
-            ].map((stat, index) => (
-              <Card key={index} className="p-6">
-                <div className="text-4xl font-bold text-green-600 mb-2">{stat.number}</div>
-                <div className="text-gray-600">{stat.label}</div>
-              </Card>
-            ))}
-          </div>
-        </div>
 
         <div>
           <h2 className="text-3xl font-bold text-green-800 mb-6">Get in Touch</h2>

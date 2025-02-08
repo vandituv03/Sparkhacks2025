@@ -19,6 +19,13 @@ except Exception as e:
 
 data = db.Users.find()
 
+def get_forums():
+    data_forums = []
+    for i in db.forums.find():
+        data_forums.append(i)
+    return data_forums
+
+
 
 def findUser(email):
 
@@ -40,6 +47,7 @@ def insert_user(fname, lname, number, email, password, address1, city, state, zi
     }
     users_collection.insert_one(user_data)
     print("User inserted successfully!")
+
 
 
       
