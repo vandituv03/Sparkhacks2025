@@ -30,9 +30,9 @@ const RegisterPage = () => {
 
     try {
       const response = await axios.post("http://127.0.0.1:5000/api/register", formData);
-      if (response.status === 201) {
+      if (response.status === 200) {
         setSuccess("Registration successful! Redirecting to login...");
-        setTimeout(() => navigate("/login"), 2000); // Redirect to login after 2 seconds
+        navigate("/login"); // Redirect to login after 2 seconds
       }
     } catch (error) {
       setError(error.response?.data?.message || "Registration failed. Try again.");
