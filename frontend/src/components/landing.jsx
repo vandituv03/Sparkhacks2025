@@ -102,7 +102,7 @@ export default function About() {
               <div>
                 <h3 className="text-xl font-bold text-green-800 mb-4">Follow Us</h3>
                 <div className="flex space-x-4">
-                  {["facebook", "twitter", "linkedin", "instagram"].map((social) => (
+                  {["facebook" , "instagram", "linkedin", "instagram"].map((social) => (
                     <Button key={social} variant="ghost" size="icon" className="text-green-600 hover:text-green-800">
                       <span className={`text-2xl bi bi-${social}`}></span>
                     </Button>
